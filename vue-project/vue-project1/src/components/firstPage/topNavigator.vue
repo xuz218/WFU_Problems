@@ -99,6 +99,7 @@ export default {
                     console.log("Received response:", responseData);
                     console.log(data.response)
                     document.searchLists = data.response.group_list;
+                    // console.log(document.searchLists)
                     setTimeout(function () {
                         // Do something after waiting for 5 seconds
                         // console.log('Five seconds have elapsed!')

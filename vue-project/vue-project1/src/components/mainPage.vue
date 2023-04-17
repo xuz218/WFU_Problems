@@ -140,8 +140,10 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url(https://xiyanhua125.com/photos/img1.JPEG) no-repeat;
-    background-size: cover;
+    background: url(../assets/bg.jpg) no-repeat;
+    /* background-size: cover; */
+    background-size: 120%; 
+    background-position: right center;
 
 }
 

@@ -4,6 +4,7 @@ import signUp from './components/signUp.vue'
 import wholeBoard from './components/firstPage/wholeBoard.vue'
 import profilePage from './components/profilePage.vue'
 import groupDemo from './components/groupDemo.vue'
+import searchPage from './components/searchPage.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/groupDemo',
     name: 'groupDemo',
     component: groupDemo
+  },
+  {
+    path: '/searchPage',
+    name: 'searchPage',
+    component: searchPage
   }
 ]
 

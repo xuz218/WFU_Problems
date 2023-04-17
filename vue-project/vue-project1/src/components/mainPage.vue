@@ -1,18 +1,22 @@
 <template>
     <body>
         <!-- entrance page -->
+        <div id="popup" class="hidden">
+            <p>Wrong email or password.</p>
+        </div>
+
         <div class="loginbox">
             <div class="inputbox">
 
                 <label for="id">Email</label>
-                <input type="text" name="uid" v-model="username">
+                <input type="text" name="uid" v-model="username" @click="setBack">
 
 
             </div>
 
             <div class="inputbox">
                 <label for="id">Password </label>
-                <input type="password" name="password" v-model="password">
+                <input type="password" name="password" v-model="password" @click="setBack">
             </div>
 
             <div class="buttons">
@@ -23,8 +27,6 @@
 
                     <button @click="goToSignup">Sign up</button>
                     <!-- <router-view></router-view> -->
-
-
                 </div>
 
             </div>
@@ -41,6 +43,11 @@ export default {
         function goToSignup() {
             router.push('/signUp')
         }
+
+        function setBack(){
+            document.getElementById("popup").classList.add("hidden");
+        }
+
         function goToWholePage() {
             const emailInput = document.querySelector('input[name="uid"]');
             const passwordInput = document.querySelector('input[name="password"]');
@@ -88,16 +95,24 @@ export default {
                     let responseData = data;
                     // do something with responseData here, for example:
                     console.log("Received response:", responseData);
-                    console.log(data.response.result)
-                    document.userInfo = data.response.user_info;
-                    router.push('/wholeBoard')
+                    console.log(data.response.result);
+                    if (data.response.result == 1) {
+                        document.userInfo = data.response.user_info;
+                        router.push('/wholeBoard')
+                    }
+                    if (data.response.result === 0) {
+                        document.getElementById("popup").classList.remove("hidden");
+                    }
+
+
                 })
                 .catch(error => console.error(error));
 
         }
         return {
             goToSignup,
-            goToWholePage
+            goToWholePage,
+            setBack
         }
     },
     data() {
@@ -129,6 +144,34 @@ body {
     background-size: cover;
 
 }
+
+#popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background-color: #FFE5CA;
+    color: #E74646;
+    text-align: center;
+    padding: 10px;
+    z-index: 9999;
+    font-size: 24px;
+    font-weight: bold;
+    /* make sure the popup appears on top of everything */
+}
+
+.hidden {
+    display: none;
+    margin: 0 auto;
+
+}
+
+/* .hidden p{
+    font-size: 40px;
+    font-weight: bold;
+} */
+
 
 .loginbox {
     display: flex;

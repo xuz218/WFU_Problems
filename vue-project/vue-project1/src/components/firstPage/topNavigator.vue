@@ -2,14 +2,17 @@
     <div class="headBar">
         <nav>
             <div class="logo">
-                <a href="#/wholeBoard">WFU Problem</a>
+                <a @click="goToMain">WFU Problem</a>
             </div>
 
             <div class="site-search">
-                <form action="">
-                    <input class="search-text" type="text" placeholder="Find your interests..." />
-                    <input class="submit" type="submit" value="Search" @click="searchDB"/>
-                </form>
+                <!-- <form action=""> -->
+                    <input class="search-text" name="groupSearch"  type="text"
+                        placeholder="Find your interests..." />
+                    <!-- <input class="submit" type="submit" value="Search" @click="searchDB" /> -->
+                    <!-- <input class="searchDB"  value="Search" /> -->
+                    <button class="searchDB" @click="searchDB">Search</button>
+                <!-- </form> -->
             </div>
 
             <div class="menu">
@@ -41,11 +44,73 @@
 </template>
   
 <script>
-import {useRouter} from 'vue-router';
+import { useRouter } from 'vue-router';
 export default {
-    setup(){
+    setup() {
         const router = useRouter();
-        function goToProfile(){
+        const headers = {
+            'Content-Type': 'application/json',
+            'Referrer-Policy': 'strict-origin-when-cross-origin',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+            'Access-Control-Allow-Origin': 'http://18.117.181.47:8888',
+            'Content-Security-Policy': "default-src 'self' 18.117.181.47:8888; font-src 'self' https://fonts.gstatic.com",
+            'Connection': 'keep-alive',
+            'Host': '18.117.181.47:8888',
+            'Upgrade-Insecure-Requests': 1,
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
+        };
+
+        function goToMain(){
+            router.push('/wholeBoard')
+        }
+
+        function searchDB() {
+            const searchInput = document.querySelector('input[name="groupSearch"]');
+            const groupSearch = "\"" + searchInput.value + "\"";
+
+            const url = 'http://18.117.181.47:8888/getgrouplist';
+            const params = {
+                keyword: groupSearch,
+            };
+
+
+
+            const options = {
+                method: 'GET',
+                headers: headers,
+                // mode: 'no-cors'
+            };
+
+            // Construct query string with URLSearchParams
+            const queryParams = new URLSearchParams(params);
+            const fullUrl = `${url}?${queryParams}`;
+
+            console.log("fullUrl:", fullUrl);
+            console.log("options:", options);
+
+            fetch(fullUrl, options)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    let responseData = data;
+                    // do something with responseData here, for example:
+                    console.log("Received response:", responseData);
+                    console.log(data.response)
+                    document.searchLists = data.response.group_list;
+                    setTimeout(function () {
+                        // Do something after waiting for 5 seconds
+                        // console.log('Five seconds have elapsed!')
+                        router.push('/searchPage?keyword=' + groupSearch)
+                    }, 300)
+                    
+                })
+                .catch(error => console.error(error));
+
+        }
+
+        function goToProfile() {
             const userId = document.userInfo.userid;
 
             const url = 'http://18.117.181.47:8888/getuser';
@@ -53,19 +118,6 @@ export default {
                 userid: userId,
             };
 
-            const headers = {
-                'Content-Type': 'application/json',
-                'Referrer-Policy': 'strict-origin-when-cross-origin',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-                'Accept-Encoding': 'gzip, deflate',
-                'Accept-Language': 'zh-CN,zh;q=0.9',
-                'Access-Control-Allow-Origin': 'http://18.117.181.47:8888',
-                'Content-Security-Policy': "default-src 'self' 18.117.181.47:8888; font-src 'self' https://fonts.gstatic.com",
-                'Connection': 'keep-alive',
-                'Host': '18.117.181.47:8888',
-                'Upgrade-Insecure-Requests': 1,
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
-            };
 
             const options = {
                 method: 'GET',
@@ -89,15 +141,30 @@ export default {
                     console.log("Received response:", responseData);
                     console.log(data.response.result)
                     document.userProfile = data.response;
-                    router.push('/profile')
+                    setTimeout(function () {
+                        // Do something after waiting for 5 seconds
+                        console.log('Five seconds have elapsed!')
+                        router.push('/profile')
+                    }, 300)
+                        
                 })
                 .catch(error => console.error(error));
 
         }
-        return{
+        return {
+            searchDB,
             goToProfile,
+            goToMain
+
         }
+
     },
+    data() {
+        return {
+            groupSearch: ""
+        };
+    },
+
 
 }
 </script>
@@ -238,7 +305,7 @@ nav {
     background-color: lightgray;
 }
 
-.submit {
+.searchDB {
     float: left;
     width: 100px;
     height: 40px;
@@ -252,7 +319,7 @@ nav {
     background-color: #577D86;
 }
 
-.submit:hover {
+.searchDB:hover {
     /* background-color: #555; */
     color: #000000;
 }

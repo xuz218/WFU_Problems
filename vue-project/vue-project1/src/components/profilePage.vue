@@ -1,5 +1,5 @@
 <template>
-  <topNavigator/>
+  <topNavigator />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
   <div class="profile">
     <div class="header">
@@ -17,11 +17,31 @@
     <div class="content">
       <h2>About Me</h2>
       <p>{{ user.about }}</p>
+
+      <h2>Email</h2>
+      <p>{{ user.email }}</p>
+
       <h2>Skills</h2>
       <ul>
         <li v-for="(skill, index) in user.skills" :key="index">{{ skill }}</li>
       </ul>
-      <h2>Experience</h2>
+
+      <h2>Introduction</h2>
+      <p>{{ user.introduction }}</p>
+
+      <h2>Interests</h2>
+      <ul>
+        <li v-for="(interest, index) in user.interests" :key="index">{{ interest }}</li>
+      </ul>
+
+      <h2>Group lists</h2>
+      <li v-for="(group, index) in user.groups" :key="index">{{ group }}</li>
+
+
+
+
+
+      <!-- <h2>Experience</h2>
       <ul>
         <li v-for="(experience, index) in user.experience" :key="index">
           <h3>{{ experience.position }}</h3>
@@ -31,10 +51,13 @@
             <li v-for="(task, index) in experience.tasks" :key="index">{{ task }}</li>
           </ul>
         </li>
-      </ul>
+      </ul> -->
     </div>
   </div>
-  <mainFooter/>
+  <div class="container">
+    <button class="post">Upload Projects</button>
+  </div>
+  <mainFooter />
 </template>
 
   
@@ -46,7 +69,7 @@ export default {
   data() {
     return {
       user: {
-        name: "Ziang Xu",
+        name: document.userProfile.username,
         title: "Web Developer",
         avatar: "https://via.placeholder.com/150",
         socialLinks: {
@@ -54,9 +77,13 @@ export default {
           github: "https://github.com",
           linkedin: "https://linkedin.com",
         },
+        email: document.userProfile.email,
         about:
           "Open to work",
-        skills: ["HTML", "CSS", "JavaScript", "Vue.js", "Node.js"],
+        introduction: document.userProfile.introduction,
+        skills: document.userProfile.skill,
+        interests: document.userProfile.interest,
+        groups: document.userProfile.group_list,
         experience: [
           {
             position: "Web Developer",
@@ -82,7 +109,7 @@ export default {
     };
   },
 
-  components:{
+  components: {
     topNavigator,
     mainFooter
   }
@@ -94,7 +121,7 @@ export default {
   max-width: 800px;
   margin: 30px auto;
   /* background-color: black; */
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 .header {
@@ -145,8 +172,8 @@ export default {
 }
 
 .content h2 {
-  margin-top: 0;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.2rem;
   font-size: 1.5rem;
 }
 
@@ -164,6 +191,24 @@ export default {
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-size: 1.25rem;
+}
+
+.container {
+  text-align: center;
+}
+
+.post {
+  margin: 0 auto;
+  width: 180px;
+  height: 50px;
+  border-radius: 5px;
+  border-color: #F0F0F0;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #F9D949;
+  font-size: 20px;
+  background-color: #3C486B;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 </style>
   

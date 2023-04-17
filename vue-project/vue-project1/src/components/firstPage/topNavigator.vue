@@ -8,7 +8,7 @@
             <div class="site-search">
                 <form action="">
                     <input class="search-text" type="text" placeholder="Find your interests..." />
-                    <input class="submit" type="submit" value="Search" />
+                    <input class="submit" type="submit" value="Search" @click="searchDB"/>
                 </form>
             </div>
 
@@ -46,7 +46,53 @@ export default {
     setup(){
         const router = useRouter();
         function goToProfile(){
-            router.push('/profile')
+            const userId = document.userInfo.userid;
+
+            const url = 'http://18.117.181.47:8888/getuser';
+            const params = {
+                userid: userId,
+            };
+
+            const headers = {
+                'Content-Type': 'application/json',
+                'Referrer-Policy': 'strict-origin-when-cross-origin',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'Accept-Encoding': 'gzip, deflate',
+                'Accept-Language': 'zh-CN,zh;q=0.9',
+                'Access-Control-Allow-Origin': 'http://18.117.181.47:8888',
+                'Content-Security-Policy': "default-src 'self' 18.117.181.47:8888; font-src 'self' https://fonts.gstatic.com",
+                'Connection': 'keep-alive',
+                'Host': '18.117.181.47:8888',
+                'Upgrade-Insecure-Requests': 1,
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
+            };
+
+            const options = {
+                method: 'GET',
+                headers: headers,
+                // mode: 'no-cors'
+            };
+
+            // Construct query string with URLSearchParams
+            const queryParams = new URLSearchParams(params);
+            const fullUrl = `${url}?${queryParams}`;
+
+            console.log("fullUrl:", fullUrl);
+            console.log("options:", options);
+
+            fetch(fullUrl, options)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    let responseData = data;
+                    // do something with responseData here, for example:
+                    console.log("Received response:", responseData);
+                    console.log(data.response.result)
+                    document.userProfile = data.response;
+                    router.push('/profile')
+                })
+                .catch(error => console.error(error));
+
         }
         return{
             goToProfile,

@@ -3,6 +3,7 @@
     <middleBox />
     <div class="pad"></div>
     <lowerBox />
+    <!-- <button class="abc" @click="checkpoint">unit test {{ userid }}</button> -->
     <mainFooter />
 </template>
 
@@ -12,12 +13,23 @@ import middleBox from "./middleBox.vue"
 import lowerBox from "./lowerBox.vue"
 import mainFooter from "./mainFooter.vue"
 export default {
-    components: {
-        topNavigator,
-        middleBox,
-        lowerBox,
-        mainFooter
-    }
+  components: {
+    topNavigator,
+    middleBox,
+    lowerBox,
+    mainFooter
+  },
+  methods: {
+    checkpoint() {
+      const userid = document.userInfo.userid;
+      this.userid = userid;
+    },
+  },
+  data() {
+    return {
+      userid: null
+    };
+  }
 }
 </script>
   
@@ -30,9 +42,7 @@ export default {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.pad{
+.pad {
     height: 10px;
 }
-
-
 </style>

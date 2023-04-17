@@ -4,7 +4,7 @@
         <div class="loginbox">
             <div class="inputbox">
 
-                <label for="id">Username</label>
+                <label for="id">Email</label>
                 <input type="text" name="uid" v-model="username">
 
 
@@ -42,11 +42,16 @@ export default {
             router.push('/signUp')
         }
         function goToWholePage() {
+            const emailInput = document.querySelector('input[name="uid"]');
+            const passwordInput = document.querySelector('input[name="password"]');
+
+            const email2 = emailInput.value;
+            const password2 = passwordInput.value;
 
             const url = 'http://18.117.181.47:8888/checklogin';
             const params = {
-                email: 'test@wfu.edu',
-                password: '123456'
+                email: email2,
+                password: password2
             };
 
             const headers = {
@@ -61,17 +66,6 @@ export default {
                 'Host': '18.117.181.47:8888',
                 'Upgrade-Insecure-Requests': 1,
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
-
-                // 'Authorization': 'Bearer my-token',
-                // 'Content-Type': 'application/json',
-                // 'User-Agent': 'PostmanRuntime/7.32.2',
-                // 'Accept-Encoding': 'gzip, deflate',
-                // 'Accept-Language': 'zh-CN,zh;q=0.9',
-                // 'Connection': 'keep-alive',
-                // 'Host': '18.117.181.47:8888',
-                // 'Upgrade-Insecure-Requests': 1,
-                // 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
-                // 'Content-Security-Policy': "default-src 'self' 18.117.181.47:8888; font-src 'self' https://fonts.gstatic.com",
             };
 
             const options = {
@@ -89,8 +83,17 @@ export default {
 
             fetch(fullUrl, options)
                 .then(response => response.json())
-                .then(data => console.log(data))
+                .then(data => {
+                    console.log(data);
+                    let responseData = data;
+                    // do something with responseData here, for example:
+                    console.log("Received response:", responseData);
+                    console.log(data.response.result)
+                    document.userInfo = data.response.user_info;
+                    router.push('/wholeBoard')
+                })
                 .catch(error => console.error(error));
+
         }
         return {
             goToSignup,

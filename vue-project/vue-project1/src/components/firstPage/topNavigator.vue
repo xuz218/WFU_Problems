@@ -28,8 +28,8 @@
                         </ul>
                     </li>
 
-                    <li class="navlists"><a class="navtag" href="#">Services</a></li>
                     <li class="navlists"><a class="navtag" href="#">Contact</a></li>
+                    <li class="navlists"><a class="navtag" href="#">Help</a></li>
                 </ul>
             </div>
 

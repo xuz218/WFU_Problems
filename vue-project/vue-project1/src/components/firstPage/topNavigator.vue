@@ -7,17 +7,16 @@
 
             <div class="site-search">
                 <!-- <form action=""> -->
-                    <input class="search-text" name="groupSearch"  type="text"
-                        placeholder="Find your interests..." />
-                    <!-- <input class="submit" type="submit" value="Search" @click="searchDB" /> -->
-                    <!-- <input class="searchDB"  value="Search" /> -->
-                    <button class="searchDB" @click="searchDB">Search</button>
+                <input class="search-text" name="groupSearch" type="text" placeholder="Find your interests..." />
+                <!-- <input class="submit" type="submit" value="Search" @click="searchDB" /> -->
+                <!-- <input class="searchDB"  value="Search" /> -->
+                <button class="searchDB" @click="searchDB">Search</button>
                 <!-- </form> -->
             </div>
 
             <div class="menu">
                 <ul>
-                    <li class="navlists"><a class="navtag" href="#">Groups</a></li>
+                    <li class="navlists"><a class="navtag" @click="goToGroup">MyGroups</a></li>
                     <li class="navlists">
                         <a class="navtag" href="#">Explore</a>
                         <ul class="droplist">
@@ -45,9 +44,15 @@
   
 <script>
 import { useRouter } from 'vue-router';
+// import { inject } from 'vue'
+
+
+// import { defineComponent,ref} from 'vue';
 export default {
     setup() {
         const router = useRouter();
+        // const reload = inject('reload')
+
         const headers = {
             'Content-Type': 'application/json',
             'Referrer-Policy': 'strict-origin-when-cross-origin',
@@ -62,8 +67,12 @@ export default {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
         };
 
-        function goToMain(){
+        function goToMain() {
             router.push('/wholeBoard')
+        }
+
+        function goToGroup() {
+            router.push('/myGroup')
         }
 
         function searchDB() {
@@ -98,14 +107,18 @@ export default {
                     // do something with responseData here, for example:
                     console.log("Received response:", responseData);
                     console.log(data.response)
-                    document.searchLists = data.response.group_list;
-                    // console.log(document.searchLists)
-                    setTimeout(function () {
-                        // Do something after waiting for 5 seconds
-                        // console.log('Five seconds have elapsed!')
-                        router.push('/searchPage?keyword=' + groupSearch)
+                    document.searchLists = responseData.response.group_list;
+                    console.log(router.currentRoute.value.fullPath )
+                    setTimeout(() => {
+                        // if (router.currentRoute.value.fullPath === '/searchPage') {
+                        //     router.go(0)
+                        //     router.push('/searchPage')
+                        // } else {
+                        //     router.push('/searchPage')
+                        // }
+                        router.push('/searchPage')
                     }, 300)
-                    
+
                 })
                 .catch(error => console.error(error));
 
@@ -144,10 +157,10 @@ export default {
                     document.userProfile = data.response;
                     setTimeout(function () {
                         // Do something after waiting for 5 seconds
-                        console.log('Five seconds have elapsed!')
+                        // console.log('Five seconds have elapsed!')
                         router.push('/profile')
                     }, 300)
-                        
+
                 })
                 .catch(error => console.error(error));
 
@@ -155,7 +168,8 @@ export default {
         return {
             searchDB,
             goToProfile,
-            goToMain
+            goToMain,
+            goToGroup
 
         }
 

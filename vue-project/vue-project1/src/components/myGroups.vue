@@ -64,7 +64,7 @@ export default {
         return {
             profileImage: "path/to/profile-image.png",
             name: "Your Name",
-            skills: ["Skill 1", "Skill 2", "Skill 3"],
+            skills: ["Skill 1", "Skill 2", "Contact information"],
             groups: [
                 {
                     id: 1,

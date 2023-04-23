@@ -1,7 +1,7 @@
 <template>
   <div class="tabdown">
     <a href="#">
-      <h1>Editor recommendations</h1>
+      <h1>Recommendations For Me</h1>
     </a>
     <ul>
       <li>
@@ -35,7 +35,7 @@
 
   <div class="tabdown">
     <a href="#">
-      <h1>Top searches</h1>
+      <h1>Peer Experts</h1>
     </a>
     <ul>
       <li>

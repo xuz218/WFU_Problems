@@ -59,7 +59,28 @@
 <script>
 import topNavigator from "./firstPage/topNavigator.vue"
 import mainFooter from "./firstPage/mainFooter.vue"
+import { useRouter } from 'vue-router';
 export default {
+    components: {
+        topNavigator,
+        mainFooter
+    },
+    setup() {
+        const router = useRouter();
+        function createGroup() {
+            router.push('/createGroup')
+        }
+        function joinGroup(groupId) {
+            // join group logic here
+            console.log(groupId)
+        }
+
+        return {
+            createGroup,
+            joinGroup
+        }
+    },
+
     data() {
         return {
             profileImage: "path/to/profile-image.png",
@@ -87,21 +108,9 @@ export default {
             ]
         };
     },
-    methods: {
-        createGroup() {
-            // create group logic here
-        },
-        joinGroup(groupId) {
-            // join group logic here
-            console.log(groupId)
-        }
-    },
-    components: {
-        topNavigator,
-        mainFooter
-    }
-};
+}
 </script>
+
 
 <style scoped>
 .container {
@@ -130,7 +139,7 @@ export default {
     margin-top: 20px;
 }
 
-.profile-column h2{
+.profile-column h2 {
     margin-top: 20px;
 }
 
@@ -259,7 +268,7 @@ export default {
     text-decoration: underline;
 }
 
-.event{
+.event {
     padding-top: 7px;
 }
 </style>

@@ -6,6 +6,7 @@ import profilePage from './components/profilePage.vue'
 import groupDemo from './components/groupDemo.vue'
 import searchPage from './components/searchPage.vue'
 import myGroup from './components/myGroups.vue'
+import createGroup from './components/createGroup.vue'
 
 const routes = [
   {
@@ -42,6 +43,11 @@ const routes = [
     path: '/myGroup',
     name: 'myGroup',
     component: myGroup
+  },
+  {
+    path: '/createGroup',
+    name: 'createGroup',
+    component: createGroup
   }
 ]
 

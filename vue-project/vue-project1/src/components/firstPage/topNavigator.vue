@@ -29,7 +29,16 @@
                     </li>
 
                     <li class="navlists"><a class="navtag" href="#">Contact</a></li>
-                    <li class="navlists"><a class="navtag" href="#">Help</a></li>
+                    <li class="navlists">
+                        <a class="navtag" href="#">Help</a>
+                        <ul class="droplist">
+                            <li class="dropContents"><a href="#">Where to start</a></li>
+                            <li class="dropContents"><a href="#">About Wake Forest</a></li>
+                            <li class="dropContents"><a href="#">Campus Map</a></li>
+                            <!-- <li class="dropContents"><a href="#">Directories</a></li> -->
+                            <li class="dropContents"><a href="#">Others</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
 

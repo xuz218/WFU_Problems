@@ -19,10 +19,11 @@
             <!-- Group boxes in the center -->
             <div class="groups">
                 <div class="group-box" v-for="(group, index) in groups" :key="index">
-                    <img :src="group.image" alt="Group Image">
-                    <h3>{{ group.name }}</h3>
-                    <p>{{ group.description }}</p>
-                    <button @click="joinGroup(group.id)" class="invite">Invite member</button>
+                    <img :src="group.image" alt="Group Image" @click="groupAccount">
+                    <h3 @click="groupAccount">{{ group.name }}</h3>
+                    <p @click="groupAccount">{{ group.description }}</p>
+                    <button @click="showInput = true" class="invite">Invite member</button>
+                    <input v-if="showInput" type="text" placeholder="Enter the userID">
                 </div>
             </div>
 
@@ -74,10 +75,14 @@ export default {
             // join group logic here
             console.log(groupId)
         }
+        function groupAccount(){
+            router.push('/groupPage')
+        }
 
         return {
             createGroup,
-            joinGroup
+            joinGroup,
+            groupAccount
         }
     },
 
@@ -85,7 +90,7 @@ export default {
         return {
             profileImage: "path/to/profile-image.png",
             name: "Your Name",
-            skills: ["Skill 1", "Skill 2", "Contact information"],
+            skills: ["Skill 1", "Skill 2", "Contact information: 123456789"],
             groups: [
                 {
                     id: 1,
@@ -105,7 +110,8 @@ export default {
                     image: "https://via.placeholder.com/300x200.jpg",
                     description: "Description of Group 3"
                 }
-            ]
+            ],
+            showInput: false
         };
     },
 }
@@ -148,13 +154,13 @@ export default {
     flex-direction: column;
     /* change this property */
     margin: 2rem auto;
-    width: 160px;
+    width: 220px;
 }
 
 .skills span {
     margin-bottom: 2rem;
     /* add margin between the items */
-    background-color: #FF6969;
+    background-color: #fbb3b3;
     padding: 0.25rem 0.5rem;
     border-radius: 1rem;
 }
@@ -248,6 +254,12 @@ export default {
     background-color: #ccc;
     border: none;
     cursor: pointer;
+}
+
+.group-box input{
+    clear: both;
+    width: 200px;
+    height: 25px;
 }
 
 .timeline {

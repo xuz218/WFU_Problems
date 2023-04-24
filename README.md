@@ -34,3 +34,7 @@ HTML5, CSS, Javascript, Node.js, Vue3 frame
 ## Contact
 
 If you have any further questions or suggestions, please contact [xuz218@wfu.edu] [zhuy319@wfu.edu]
+
+![plot](entry_page1.png)
+![plot](entry_page2.png)
+
